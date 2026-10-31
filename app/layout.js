@@ -1,4 +1,5 @@
 // frontend/app/layout.js
+import { Suspense } from "react";
 import './globals.css';
 import { ThemeProvider } from '../lib/theme';
 import Navbar from '../components/Navbar';
@@ -22,7 +23,9 @@ export default function RootLayout({ children }) {
       <body>
         <ThemeProvider>
           <div className="site-wrapper">
-            <Navbar />
+            <Suspense fallback={<div className="navbar-loading" />}>
+              <Navbar />
+            </Suspense>
             <main className="main-content">{children}</main>
             <footer className="site-footer">
               <div className="container footer-inner">
