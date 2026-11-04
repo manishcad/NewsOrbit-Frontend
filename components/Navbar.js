@@ -26,18 +26,12 @@ export default function Navbar({ onScraped }) {
   const [scraping, setScraping] = useState(false);
   const [scrapeMsg, setScrapeMsg] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [currentDate, setCurrentDate] = useState('');
+  const [currentDate, setCurrentDate] = useState('Daily Dispatch');
 
   useEffect(() => {
-    const now = new Date();
-    setCurrentDate(
-      now.toLocaleDateString('en-US', {
-        weekday: 'long',
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-      })
-    );
+    setTimeout(() => setCurrentDate(new Date().toLocaleDateString('en-US', {
+      weekday: 'long', month: 'short', day: 'numeric', year: 'numeric',
+    })), 0);
   }, []);
 
   const handleSearchSubmit = (e) => {

@@ -685,6 +685,45 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex: 1;
+}
+
+.filter-search-form {
+  display: flex;
+  flex: 1;
+  gap: 8px;
+}
+
+.filter-search-input {
+  min-width: 220px;
+  flex: 1;
+  background: var(--bg-muted);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  padding: 7px 12px;
+  border-radius: var(--radius-sm);
+}
+
+.filter-search-button {
+  border: 1px solid var(--accent-burgundy);
+  border-radius: var(--radius-sm);
+  padding: 0 14px;
+  background: var(--accent-burgundy);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.filter-search-button:hover {
+  background: var(--accent-burgundy-light);
+}
+
+.filter-search-input:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px var(--accent-blue-subtle);
 }
 
 .select-source {
@@ -695,6 +734,22 @@ h1, h2, h3, h4, h5, h6 {
   padding: 6px 12px;
   border-radius: var(--radius-sm);
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .filter-selects {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-search-input {
+    min-width: 0;
+  }
+
+  .filter-search-form {
+    width: 100%;
+  }
 }
 
 /* ── Editorial News Card Grid ──────────────────────────────────────── */
@@ -1628,6 +1683,67 @@ ol.citations-list {
     min-width: 0;
     width: 100%;
   }
+}
+
+/* Compact phone layouts */
+@media (max-width: 600px) {
+  html, body { overflow-x: hidden; }
+  .container { padding-left: 14px; padding-right: 14px; }
+  .nav-top-wire { padding: 5px 0; font-size: .66rem; }
+  .nav-top-inner { gap: 6px; }
+  .wire-date { max-width: 42%; line-height: 1.25; }
+  .wire-status { gap: 5px; }
+  .sync-live-tag { font-size: .62rem; gap: 4px; }
+  .sync-pulse { flex: 0 0 6px; }
+  .btn-sync-icon { font-size: .67rem; height: 30px; gap: 3px; }
+  .nav-main-inner { gap: 6px; }
+  .brand-editorial { gap: 5px; }
+  .brand-title { font-size: 1.18rem; letter-spacing: .01em; }
+  .brand-emblem { font-size: .95rem; }
+  .nav-actions { gap: 6px; }
+  .btn-ai-nav { font-size: .72rem; padding: 7px 9px; }
+  .theme-toggle-btn { width: 31px; height: 31px; }
+  .mobile-menu-btn { font-size: 1.2rem; padding: 3px; }
+  .mobile-drawer { padding: 14px; }
+  .editorial-header-banner { align-items: flex-start; gap: 8px; flex-direction: column; margin-bottom: 16px; }
+  .hero-image-wrap { height: clamp(190px, 58vw, 280px); }
+  .hero-title { font-size: clamp(1.45rem, 7vw, 1.8rem); overflow-wrap: anywhere; }
+  .hero-meta-row { flex-wrap: wrap; gap: 7px; }
+  .hero-footer-bar { align-items: flex-start; gap: 10px; flex-direction: column; }
+  .trending-grid { gap: 10px; }
+  .filters-bar { padding: 10px; gap: 10px; }
+  .category-pills { width: 100%; max-width: calc(100vw - 52px); }
+  .filter-selects { min-width: 0; }
+  .filter-search-form { min-width: 0; }
+  .filter-search-button { padding: 0 10px; }
+  .section-title-wrap { align-items: flex-start; gap: 5px; flex-direction: column; }
+  .news-grid { gap: 14px; }
+  .card-body { padding: 15px; }
+  .card-title { overflow-wrap: anywhere; }
+  .card-footer { flex-wrap: wrap; gap: 8px; }
+  .reader-container { padding: 22px 14px 44px; }
+  .reader-title { font-size: clamp(1.7rem, 8vw, 2.2rem); overflow-wrap: anywhere; }
+  .reader-byline { align-items: flex-start; gap: 8px; flex-direction: column; }
+  .reader-body { font-size: 1.08rem; }
+  .ai-research-container { padding-top: 24px; }
+  .ai-hero-title { font-size: clamp(1.65rem, 8vw, 2rem); }
+  .ai-input-form { gap: 10px; }
+  .ai-input-form input, .ai-input-form textarea { min-width: 0; width: 100%; }
+  .citation-item { align-items: flex-start; padding: 9px; gap: 8px; }
+  .citation-body { overflow-wrap: anywhere; }
+  .analysis-box, .perspectives-block { padding: 14px; }
+  .footer-links { width: 100%; justify-content: space-between; gap: 20px; }
+  .footer-bottom { align-items: flex-start; flex-direction: column; }
+}
+
+@media (max-width: 360px) {
+  .container { padding-left: 11px; padding-right: 11px; }
+  .brand-title { font-size: 1.05rem; }
+  .wire-date { font-size: .6rem; }
+  .sync-live-tag { font-size: .56rem; }
+  .btn-sync-icon { padding: 0 6px; font-size: .62rem; }
+  .category-pills { max-width: calc(100vw - 44px); }
+  .footer-links { gap: 12px; }
 }
 
 /* ── AI usage allowance ─────────────────────────────────────────────── */

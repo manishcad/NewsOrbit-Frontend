@@ -1,5 +1,6 @@
 // frontend/app/layout.js
 import { Suspense } from "react";
+import Link from 'next/link';
 import './globals.css';
 import { ThemeProvider } from '../lib/theme';
 import Navbar from '../components/Navbar';
@@ -41,17 +42,17 @@ export default function RootLayout({ children }) {
                 <div className="footer-links">
                   <div className="footer-col">
                     <h4>Desks</h4>
-                    <a href="/?category=national">National</a>
-                    <a href="/?category=international">World</a>
-                    <a href="/?category=business">Business</a>
-                    <a href="/?category=technology">Technology</a>
-                    <a href="/?category=sports">Sports</a>
+                    <Link href="/?category=national">National</Link>
+                    <Link href="/?category=international">World</Link>
+                    <Link href="/?category=business">Business</Link>
+                    <Link href="/?category=technology">Technology</Link>
+                    <Link href="/?category=sports">Sports</Link>
                   </div>
                   <div className="footer-col">
                     <h4>Platform</h4>
-                    <a href="/research">AI Research Lab</a>
-                    <a href="/#trending">Trending Stories</a>
-                    <a href="/#latest">Latest Wire</a>
+                    <Link href="/research">AI Research Lab</Link>
+                    <Link href="/#trending">Trending Stories</Link>
+                    <Link href="/#latest">Latest Wire</Link>
                   </div>
                 </div>
               </div>

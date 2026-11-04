@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import HeroSection from '../components/HeroSection';
 import TrendingSection from '../components/TrendingSection';
 import NewsCard from '../components/NewsCard';
@@ -13,28 +13,18 @@ import { getArticles, getSources, getStats } from '../lib/api';
 
 function DashboardContent() {
   const searchParams = useSearchParams();
-  const initialCategory = searchParams.get('category') || '';
-  const initialSearch = searchParams.get('search') || '';
+  const router = useRouter();
+  const category = searchParams.get('category') || '';
+  const search = searchParams.get('search') || '';
 
   const [articles, setArticles] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(1);
-  const [category, setCategory] = useState(initialCategory);
   const [source, setSource] = useState('');
-  const [search, setSearch] = useState(initialSearch);
   const [sourcesList, setSourcesList] = useState([]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
-  // Sync category or search when URL changes
-  useEffect(() => {
-    const cat = searchParams.get('category') || '';
-    const q = searchParams.get('search') || '';
-    setCategory(cat);
-    setSearch(q);
-    setPage(1);
-  }, [searchParams]);
 
   // Load Metadata (Sources & Stats)
   useEffect(() => {
@@ -74,16 +64,40 @@ function DashboardContent() {
   }, [page, category, source, search]);
 
   useEffect(() => {
-    loadArticles();
-  }, [loadArticles]);
+    let cancelled = false;
+    getArticles({ page, category, source, search })
+      .then((data) => {
+        if (cancelled) return;
+        setArticles(data.results || []);
+        setTotalCount(data.count || 0);
+      })
+      .catch(() => {
+        if (!cancelled) setError('Could not load articles. Ensure the backend server is running.');
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, [page, category, source, search]);
 
   const handleCategoryChange = (newCat) => {
-    setCategory(newCat);
+    const params = new URLSearchParams(searchParams.toString());
+    if (newCat) params.set('category', newCat);
+    else params.delete('category');
+    router.push(`/?${params.toString()}#latest`);
     setPage(1);
   };
 
   const handleSourceChange = (newSrc) => {
     setSource(newSrc);
+    setPage(1);
+  };
+
+  const handleSearchChange = (value) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value.trim()) params.set('search', value.trim());
+    else params.delete('search');
+    router.replace(`/?${params.toString()}#latest`);
     setPage(1);
   };
 
@@ -117,7 +131,7 @@ function DashboardContent() {
         />
         <SearchBar
           search={search}
-          onSearchChange={setSearch}
+          onSearchChange={handleSearchChange}
           source={source}
           onSourceChange={handleSourceChange}
           sources={sourcesList}

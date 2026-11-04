@@ -10,6 +10,24 @@ export default function SearchBar({
 }) {
   return (
     <div className="filter-selects">
+      <form
+        className="filter-search-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSearchChange(new FormData(e.currentTarget).get('search') || '');
+        }}
+      >
+        <input
+          key={search}
+          type="search"
+          name="search"
+          defaultValue={search}
+          placeholder="Search headlines, summaries..."
+          className="filter-search-input"
+          aria-label="Search articles"
+        />
+        <button type="submit" className="filter-search-button">Search</button>
+      </form>
       <select
         value={source}
         onChange={(e) => onSourceChange(e.target.value)}
