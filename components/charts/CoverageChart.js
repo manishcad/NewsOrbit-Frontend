@@ -31,6 +31,9 @@ export default function CoverageChart({ chart }) {
   }
 
   const { type = 'bar', title, data } = chart;
+  // The backend says which fields hold the label and the number.
+  const xKey = chart.x_key || 'name';
+  const yKey = chart.y_key || 'value';
 
   return (
     <div
@@ -71,8 +74,8 @@ export default function CoverageChart({ chart }) {
               />
               <Pie
                 data={data}
-                dataKey="value"
-                nameKey="name"
+                dataKey={yKey}
+                nameKey={xKey}
                 cx="50%"
                 cy="50%"
                 outerRadius={95}
@@ -95,7 +98,7 @@ export default function CoverageChart({ chart }) {
             >
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" />
               <XAxis
-                dataKey="name"
+                dataKey={xKey}
                 stroke="var(--text-muted)"
                 fontSize={11}
                 tickLine={false}
@@ -119,7 +122,7 @@ export default function CoverageChart({ chart }) {
                   fontSize: '0.82rem',
                 }}
               />
-              <Bar dataKey="value" fill="var(--accent-burgundy)" radius={[4, 4, 0, 0]} />
+              <Bar dataKey={yKey} fill="var(--accent-burgundy)" radius={[4, 4, 0, 0]} />
             </BarChart>
           )}
         </ResponsiveContainer>

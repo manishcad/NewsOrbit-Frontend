@@ -57,8 +57,14 @@ export default function Navbar({ onScraped }) {
       setTimeout(() => setScrapeMsg(''), 4000);
       if (onScraped) onScraped();
     } catch (err) {
-      setScrapeMsg('Failed');
-      setTimeout(() => setScrapeMsg(''), 4000);
+      // The server allows one sync per cooldown for the whole site.
+      if (err.status === 429) {
+        const minutes = Math.max(1, Math.ceil((err.retryAfter || 60) / 60));
+        setScrapeMsg(`Next sync in ${minutes}m`);
+      } else {
+        setScrapeMsg('Failed');
+      }
+      setTimeout(() => setScrapeMsg(''), 5000);
     } finally {
       setScraping(false);
     }

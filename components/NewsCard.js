@@ -1,40 +1,33 @@
 // frontend/components/NewsCard.js
 import Link from 'next/link';
+import { getArticleImage, DEFAULT_FALLBACK_IMAGE } from '../lib/imageFallback';
 
 export default function NewsCard({ article, compact = false }) {
-  const publishedDate = article.published_at
-    ? new Date(article.published_at).toLocaleDateString('en-US', {
+  const rawDate = article.published_at || article.collected_at;
+  const publishedDate = rawDate
+    ? new Date(rawDate).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',
         year: 'numeric',
       })
     : 'Recent Wire';
 
-  // Support both article.image_url and extra.image_url
-  const imageUrl = article.image_url || (article.extra && article.extra.image_url);
+  const imageUrl = getArticleImage(article);
 
   return (
     <article className={`news-card ${compact ? 'compact' : ''}`}>
       <div className="card-image-wrap">
-        {imageUrl ? (
-          <img
-            src={imageUrl}
-            alt={article.title}
-            className="card-image"
-            loading="lazy"
-            onError={(e) => {
-              // Graceful fallback if external image URL is blocked/broken
-              e.currentTarget.style.display = 'none';
-              if (e.currentTarget.parentElement) {
-                e.currentTarget.parentElement.classList.add('has-fallback');
-              }
-            }}
-          />
-        ) : (
-          <div className="card-image-placeholder">
-            <span>📰</span>
-          </div>
-        )}
+        <img
+          src={imageUrl}
+          alt={article.title}
+          className="card-image"
+          loading="lazy"
+          onError={(e) => {
+            if (e.currentTarget.src !== DEFAULT_FALLBACK_IMAGE) {
+              e.currentTarget.src = DEFAULT_FALLBACK_IMAGE;
+            }
+          }}
+        />
       </div>
 
       <div className="card-body">

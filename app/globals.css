@@ -1472,3 +1472,172 @@ h1, h2, h3, h4, h5, h6 {
     gap: 36px;
   }
 }
+
+/* ── AI Research: citations, analysis & limitations ─────────────────── */
+.citation-ref {
+  font-family: var(--font-sans);
+  font-size: 0.72em;
+  font-weight: 700;
+  vertical-align: super;
+  line-height: 0;
+  margin-left: 1px;
+  color: var(--accent-burgundy);
+  text-decoration: none;
+}
+
+.citation-ref:hover {
+  text-decoration: underline;
+}
+
+.dossier-summary-text p + p,
+.analysis-text + .analysis-text {
+  margin-top: 14px;
+}
+
+.ai-status-note {
+  margin-bottom: 24px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent-blue);
+  background: var(--accent-blue-subtle);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.ai-status-note.insufficient {
+  border-left-color: var(--accent-burgundy);
+  background: var(--accent-burgundy-subtle);
+}
+
+.finding-num {
+  font-weight: 700;
+  color: var(--accent-burgundy);
+  margin-right: 6px;
+}
+
+.analysis-box {
+  margin-bottom: 32px;
+  padding: 20px;
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.analysis-disclaimer {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.analysis-text {
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.entities-block {
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.entity-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.entity-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  min-width: 110px;
+}
+
+.entity-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.entity-chip {
+  font-size: 0.8rem;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-muted);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.limitations-box {
+  margin-bottom: 32px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+ol.citations-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.citations-list .citation-item {
+  justify-content: flex-start;
+}
+
+.citation-num {
+  font-weight: 700;
+  color: var(--accent-burgundy);
+  min-width: 2.2em;
+}
+
+.citation-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.citations-list .citation-badge {
+  white-space: normal;
+}
+
+.citations-list .citation-badge a {
+  color: var(--accent-blue);
+}
+
+/* ── Small phones: keep the masthead within the screen ─────────────── */
+@media (max-width: 480px) {
+  .brand-edition {
+    display: none;
+  }
+  .brand-title {
+    font-size: 1.35rem;
+  }
+  .nav-main-inner,
+  .nav-actions {
+    gap: 8px;
+  }
+  .btn-ai-nav {
+    padding-left: 10px;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+  .entity-label {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+/* ── AI usage allowance ─────────────────────────────────────────────── */
+.ai-usage-note {
+  margin: 12px 0 4px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.ai-usage-note.empty {
+  color: var(--accent-burgundy);
+  font-weight: 600;
+}

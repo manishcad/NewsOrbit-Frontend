@@ -1,6 +1,7 @@
 
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { getArticleImage, DEFAULT_FALLBACK_IMAGE } from '../../../lib/imageFallback';
 
 async function fetchArticle(id) {
   const API_BASE =
@@ -66,16 +67,15 @@ async function ArticleContent({ params }) {
     );
   }
 
-  const published = article.published_at
-    ? new Date(article.published_at).toLocaleString('en-US', {
+  const rawDate = article.published_at || article.collected_at;
+  const published = rawDate
+    ? new Date(rawDate).toLocaleString('en-US', {
       dateStyle: 'medium',
       timeStyle: 'short',
     })
     : 'Recent Publication';
 
-  const imageUrl =
-    article.image_url ||
-    (article.extra && article.extra.image_url);
+  const imageUrl = getArticleImage(article);
 
   return (
     <div className="container">
@@ -149,7 +149,10 @@ async function ArticleContent({ params }) {
             alignItems: 'center',
           }}
         >
-          <Link href="/research" className="btn-ai-nav">
+          <Link
+            href={`/research?q=${encodeURIComponent(`What is the latest on: ${article.title}`)}`}
+            className="btn-ai-nav"
+          >
             ✦ Query AI Research on this topic
           </Link>
 

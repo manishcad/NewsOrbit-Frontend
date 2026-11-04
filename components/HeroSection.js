@@ -1,18 +1,20 @@
 // frontend/components/HeroSection.js
 import Link from 'next/link';
+import { getArticleImage, DEFAULT_FALLBACK_IMAGE } from '../lib/imageFallback';
 
 export default function HeroSection({ featuredArticle, secondaryArticles = [] }) {
   if (!featuredArticle) return null;
 
-  const publishedDate = featuredArticle.published_at
-    ? new Date(featuredArticle.published_at).toLocaleDateString('en-US', {
+  const rawDate = featuredArticle.published_at || featuredArticle.collected_at;
+  const publishedDate = rawDate
+    ? new Date(rawDate).toLocaleDateString('en-US', {
         month: 'long',
         day: 'numeric',
         year: 'numeric',
       })
     : 'Recent Publication';
 
-  const heroImgUrl = featuredArticle.image_url || (featuredArticle.extra && featuredArticle.extra.image_url);
+  const heroImgUrl = getArticleImage(featuredArticle);
 
   return (
     <section className="editorial-hero-section">
@@ -25,20 +27,16 @@ export default function HeroSection({ featuredArticle, secondaryArticles = [] })
         {/* Main Lead Story */}
         <div className="hero-lead-card">
           <div className="hero-image-wrap">
-            {heroImgUrl ? (
-              <img
-                src={heroImgUrl}
-                alt={featuredArticle.title}
-                className="hero-image"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                }}
-              />
-            ) : (
-              <div className="card-image-placeholder" style={{ fontSize: '3rem' }}>
-                <span>📰</span>
-              </div>
-            )}
+            <img
+              src={heroImgUrl}
+              alt={featuredArticle.title}
+              className="hero-image"
+              onError={(e) => {
+                if (e.currentTarget.src !== DEFAULT_FALLBACK_IMAGE) {
+                  e.currentTarget.src = DEFAULT_FALLBACK_IMAGE;
+                }
+              }}
+            />
           </div>
 
           <div className="hero-meta-row">
